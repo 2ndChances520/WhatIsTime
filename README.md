@@ -87,4 +87,4 @@ To experience the full interactive timeline and mathematical animations, follow 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/what-is-time.git
+   git clone https://github.com/2ndChances520/what-is-time.git
