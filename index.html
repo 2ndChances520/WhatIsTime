@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is Time?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            /* Meshy.ai inspired dark workspace theme */
+            --bg-color: #0a0a0a;
+            --panel-bg: rgba(255, 255, 255, 0.03);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --accent: #8b5cf6; /* Vibrant purple */
+            --accent-glow: rgba(139, 92, 246, 0.25);
+            --secondary-accent: #3b82f6; /* Blue glow for contrast */
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.08), transparent 25%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 0 40px 0;
+            border-bottom: 1px solid var(--panel-border);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff, #a1a1aa, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .author-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 4px;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .glass-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 8px 40px var(--accent-glow);
+        }
+
+        .bible-verse {
+            border-left: 3px solid var(--accent);
+            padding-left: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #d4d4d8;
+        }
+
+        .formula-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: monospace;
+            color: #a1a1aa;
+            overflow-x: auto;
+            margin: 20px 0;
+            line-height: 1.4;
+        }
+        
+        .section-title {
+            color: #fff;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .meaning-text {
+            color: #c4b5fd;
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+        
+        .lexicon-text {
+            font-size: 0.95rem;
+            color: #a1a1aa;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.03);
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        /* NEW CUSTOM STYLES */
+        .framed-quote {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+        
+        .framed-quote p.quote-text {
+            font-size: 1.3rem;
+            color: #fff;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .framed-quote .reference {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .timeline-widget {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+            position: relative;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-areas:
+                "header header kjv-tag"
+                "detail-box diagram diagram"
+                "timeline-slider timeline-slider timeline-slider";
+            grid-template-columns: 280px 1fr 50px;
+            gap: 15px;
+        }
+        
+        .tw-header {
+            grid-area: header;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0;
+        }
+        
+        .tw-kjv-tag {
+            grid-area: kjv-tag;
+            display: inline-block;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(139, 92, 246, 0.1);
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            font-weight: 600;
+            align-self: center;
+            height: fit-content;
+            margin-bottom: 0;
+            text-align: center;
+        }
+        
+        #detail-box {
+            grid-area: detail-box;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 0;
+        }
+        
+        #detail-box h3 {
+            margin-top: 0;
+            color: #fff;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        #detail-box p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        #timeline-diagram {
+            grid-area: diagram;
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            margin-bottom: 0;
+            border-radius: 8px;
+            border: 1px solid var(--panel-border);
+            background: linear-gradient(to right, rgba(139, 92, 246, 0.05), rgba(0, 0, 0, 0.5));
+        }
+        
+        #timeline-svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-widget {
+                grid-template-areas:
+                    "header kjv-tag"
+                    "diagram diagram"
+                    "detail-box detail-box"
+                    "timeline-slider timeline-slider";
+                grid-template-columns: 1fr auto;
+            }
+        }
+        
+        .timeline-pointer {
+            position: absolute;
+            top: 10%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .pointer-line {
+            width: 2px;
+            height: 100px;
+            background: var(--accent);
+            margin: 0 auto 5px auto;
+        }
+        
+        .slider-container {
+            grid-area: timeline-slider;
+            padding: 20px 0;
+        }
+        
+        input[type=range] {
+            width: 100%;
+            accent-color: var(--accent);
+        }
+        
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .video-btn {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .video-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+        
+        .scripture-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent);
+            padding: 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px 0;
+        }
+        
+        .scripture-title {
+            display: block;
+            font-weight: 600;
+            color: #c4b5fd;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .verse-num {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.8em;
+            vertical-align: super;
+            margin-right: 3px;
+        }
+        
+        a {
+            color: var(--secondary-accent);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .atom-widget {
+            background: linear-gradient(135deg, rgba(6, 21, 48, 0.8), rgba(10, 31, 68, 0.9));
+            border: 1px solid #1a3a6c;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(77, 184, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .atom-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px dashed var(--accent);
+            margin: 0 auto 20px;
+            position: relative;
+            animation: spin 10s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .atom-core {
+            width: 24px;
+            height: 24px;
+            background: var(--secondary-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--secondary-accent);
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .cycles-text {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 20px 0;
+            font-family: 'Inter', monospace;
+            background: linear-gradient(90deg, var(--secondary-accent), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>What Is Time?</h1>
+        <p class="author-title">by James S.</p>
+        <p class="subtitle">This is a summary of everything I have learned to be true in physics and the universe as an observer and through other observers in history. Through the filter of Christ, The Master Builder.</p>
+    </header>
+
+    <div class="framed-quote">
+        <p class="quote-text">"I am Alpha and Omega, the beginning and the end, the first and the last. Blessed are they that do His commandments, that they may have right to the Tree of Life, and may enter in through the gates into the city."</p>
+        <p class="reference">- God (Revelation 22:13-14)</p>
+    </div>
+
+    <!-- TOP INTERACTIVE TIMELINE WIDGET -->
+    <div class="timeline-widget">
+        <div class="tw-header">
+            <svg width="30" height="30" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#4db8ff"/>
+                <text x="50" y="55" font-family="Arial" font-size="30" fill="#061530" text-anchor="middle" dominant-baseline="middle">TL</text>
+            </svg> 
+            TeamLegacy Cosmic Timeline
+        </div>
+        <div class="tw-kjv-tag">KJV</div>
+        
+        <div id="detail-box">
+            <h3>INFO</h3>
+            <p><strong>TIME:</strong> <span id="info-time">10⁻⁴³ sec</span></p>
+            <p><strong>EPOCH:</strong> <span id="info-epoch">Planck Epoch</span></p>
+            <p><strong>DESCRIPTION:</strong> <span id="info-description">The very beginning of the universe.</span></p>
+            <h3 style="margin-top:15px; color:#b3d9ff;">KJV VERSE</h3>
+            <p id="info-kjv" style="font-style: italic; color: #4db8ff; margin-bottom: 0;">"In the beginning God created the heaven and the earth." - Genesis 1:1</p>
+        </div>
+
+        <div id="timeline-diagram">
+            <svg id="timeline-svg" viewBox="0 0 700 250">
+                <!-- SVG dynamically injected here -->
+            </svg>
+            <div class="timeline-pointer" style="left: 5%;">
+                <div class="pointer-line"></div>
+                ALPHA
+            </div>
+            <div class="timeline-pointer" style="right: 5%;">
+                <div class="pointer-line"></div>
+                OMEGA
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <input type="range" id="epochSlider" min="0" max="8" value="0">
+            <div class="range-labels">
+                <span>ALPHA (Planck Epoch)</span>
+                <span>OMEGA (Final Collapse)</span>
+            </div>
+        </div>
+    </div>
+    <!-- END TIMELINE WIDGET -->
+
+    <section id="part-one">
+        <h2>Part 1: The Foundation – God’s Blueprint (Genesis 1)</h2>
+        <div class="glass-card">
+            <p><strong>The Concept:</strong> Before man ever formed a metal, God formed the rules.</p>
+            <p>Here is a video tour of the Creation, that summarizes Gen 1:1-28 so don't worry:</p>
+            <a href="https://youtu.be/lghwcMUYLTg?si=-YJmWxtidee3cNAf" target="_blank" class="video-btn">▶ Watch: Epic Video</a>
+            <br><br>
+            <!-- NEW AUDIO BUTTON ADDED HERE -->
+            <a href="javascript:void(0);" onclick="playStanAudio()" class="video-btn" id="stanBtn">🔊 Read by the Stan U.</a>
+            <audio id="stanAudio" src="https://raw.githubusercontent.com/2ndChances520/NiTinol_message/main/StanUnderhill_GEN1-28.m4a"></audio>
+            
+            <div class="scripture-box">
+                <span class="scripture-title">Genesis 1:1-28 (King James Version (1769) with Strongs Numbers and Morphology)</span>
+                <p><span class="verse-num">1</span> In the beginning God created the heaven and the earth. <span class="verse-num">2</span> And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters. <span class="verse-num">3</span> And God said, Let there be light: and there was light. <span class="verse-num">4</span> And God saw the light, that it was good: and God divided the light from the darkness. <span class="verse-num">5</span> And God called the light Day, and the darkness he called Night. And the evening and the morning were the first day.</p>
+                <p><span class="verse-num">6</span> And God said, Let there be a firmament in the midst of the waters, and let it divide the waters from the waters. <span class="verse-num">7</span> And God made the firmament, and divided the waters which were under the firmament from the waters which were above the firmament: and it was so. <span class="verse-num">8</span> And God called the firmament Heaven. And the evening and the morning were the second day. <span class="verse-num">9</span> And God said, Let the waters under the heaven be gathered together unto one place, and let the dry land appear: and it was so. <span class="verse-num">10</span> And God called the dry land Earth; and the gathering together of the waters called he Seas: and God saw that it was good.</p>
+                <p><span class="verse-num">11</span> And God said, Let the earth bring forth grass, the herb yielding seed, and the fruit tree yielding fruit after his kind, whose seed is in itself, upon the earth: and it was so. <span class="verse-num">12</span> And the earth brought forth grass, and herb yielding seed after his kind, and the tree yielding fruit, whose seed was in itself, after his kind: and God saw that it was good. <span class="verse-num">13</span> And the evening and the morning were the third day. <span class="verse-num">14</span> And God said, Let there be lights in the firmament of the heaven to divide the day from the night; and let them be for signs, and for seasons, and for days, and years: <span class="verse-num">15</span> And let them be for lights in the firmament of the heaven to give light upon the earth: and it was so.</p>
+                
+                <div style="background-color: #061530; padding: 15px; border-radius: 8px; margin: 30px 0; border: 1px solid #1a3a6c; text-align: center;">
+                    <p style="font-size: 1.1em; color: #e0e6ed;">Let's just take a break and let me show you, what I belive is a builders mark, I think Jesus left little clues everywhere!</p>
+                    <a href="https://www.youtube.com/watch?v=nt2OlMAJj6o" target="_blank" class="video-btn" style="margin-bottom: 20px;">▶ Watch: Builder's Mark</a>
+                    <p style="font-size: 1.1em; color: #4db8ff; font-weight: bold; margin-bottom: 0;">Alright back to the reading!</p>
+                </div>
+                
+                <p><span class="verse-num">16</span> And God made two great lights; the greater light to rule the day, and the lesser light to rule the night: he made the stars also. <span class="verse-num">17</span> And God set them in the firmament of the heaven to give light upon the earth, <span class="verse-num">18</span> And to rule over the day and over the night, and to divide the light from the darkness: and God saw that it was good. <span class="verse-num">19</span> And the evening and the morning were the fourth day. <span class="verse-num">20</span> And God said, Let the waters bring forth abundantly the moving creature that hath life, and fowl that may fly above the earth in the open firmament of heaven.</p>
+                <p><span class="verse-num">21</span> And God created great whales, and every living creature that moveth, which the waters brought forth abundantly, after their kind, and every winged fowl after his kind: and God saw that it was good. <span class="verse-num">22</span> And God blessed them, saying, Be fruitful, and multiply, and fill the waters in the seas, and let fowl multiply in the earth. <span class="verse-num">23</span> And the evening and the morning were the fifth day. <span class="verse-num">24</span> And God said, Let the earth bring forth the living creature after his kind, cattle, and creeping thing, and beast of the earth after his kind: and it was so. <span class="verse-num">25</span> And God made the beast of the earth after his kind, and cattle after their kind, and every thing that creepeth upon the earth after his kind: and God saw that it was good.</p>
+                
+                <h3 style="color: #ff6b6b; font-size: 1.4em; text-align: center; margin: 35px 0 20px 0;">The Crescendo!</h3>
+                
+                <p><span class="verse-num">26</span> And God said, Let us make man in our image, after our likeness: and let them have dominion over the fish of the sea, and over the fowl of the air, and over the cattle, and over all the earth, and over every creeping thing that creepeth upon the earth. <span class="verse-num">27</span> So God created man in his own image, in the image of God created he him; male and female created he them. <span class="verse-num">28</span> And God blessed them, and God said unto them, Be fruitful, and multiply, and replenish the earth, and subdue it: and have dominion over the fish of the sea, and over the fowl of the air, and over every living thing that moveth upon the earth.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="part-two">
+        <h2>Part Two: The Mystery of Time</h2>
+        <div class="glass-card">
+            <p>Everything in quantum physics changes with time. Particles decay, atoms vibrate, and waves collapse. Time is everywhere in the equations, serving as the clock that makes quantum mechanics work. Yet, unlike matter made of atoms, or light made of photons, <strong>time is not made of anything.</strong></p>
+            
+            <p>In standard quantum mechanics, time is an external background—a stage where the drama of physics plays out. But in Einstein's General Relativity, time is a dynamic, physical fabric woven into space (spacetime) that bends and stretches around massive objects.</p>
+            
+            <p>This paradox—that our most accurate atomic clocks can measure time to 18 decimal places without modern physics being able to fully explain what time <em>is</em>—remains the greatest unresolved problem in physics.</p>
+            
+            <p>While the physics of time points to mysteries at the Planck scale, the <em>flow</em> of time leaves behind a physical record of humanity. Below, we trace how time has preserved the most studied collection of ancient texts in human history: The Bible. By mapping each book through time, authorship, and the physical manuscript evidence that survived the centuries, we see a remarkable timeline of preservation.</p>
+        </div>
+
+        <div class="glass-card">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <a href="https://www.youtube.com/watch?v=yuD34tEpRFw" target="_blank" class="video-btn" style="margin: 0;">▶ Watch: Time Dilation</a>
+            </div>
+            <h3 class="section-title" style="margin-top: 0;">God Beyond Human Time</h3>
+            <p><strong>2 Peter 3:8</strong></p>
+            <blockquote class="bible-verse">
+                "But do not forget this one thing, dear friends: With the Lord a day is like a thousand years, and a thousand years are like a day."
+            </blockquote>
+            <div class="lexicon-text">
+                <strong>05507</strong><br>
+                5507 chilioi khil'-ee-oy plural of uncertain affinity; a thousand:--thousand.
+            </div>
+            <p class="meaning-text">Meaning: God exists entirely outside the constraints of earthly time. What feels like an eternity to us is a mere moment to Him, and vice versa.</p>
+
+            <p>Using Special Relativity's time dilation formula, 2 Peter 3:8 can be written as:</p>
+            <div class="formula-block" style="font-family: inherit; color: var(--text-main); background: rgba(0, 0, 0, 0.4); padding: 30px; border-radius: 12px; border: 1px solid var(--panel-border);">
+                <h4 style="text-align: center; color: var(--accent); letter-spacing: 2px; margin-top: 0; margin-bottom: 25px; text-transform: uppercase;">2 Peter 3:8 - Time Dilation Formula</h4>
+                
+                <div style="font-size: 1.2em; overflow-x: auto; padding: 10px 0; display: flex; justify-content: center; margin-bottom: 20px;">
+$$ t_{\text{Earth}} = \frac{t_{\text{Divine}}}{\sqrt{1 - \left(\frac{v}{c}\right)^2}} = \gamma \cdot t_{\text{Divine}} $$
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h5 style="color: #fff; margin-top: 0; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">Variables</h5>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: var(--text-muted);">
+                            <li style="margin-bottom: 8px;"><strong>\(t_{\text{Earth}}\)</strong> = Time elapsed on Earth (1,000 years = ~365,250 days)</li>
+                            <li style="margin-bottom: 8px;"><strong>\(t_{\text{Divine}}\)</strong> = Proper time in divine frame (1 day)</li>
+                            <li style="margin-bottom: 8px;"><strong>\(\gamma\)</strong> = Lorentz factor (Time dilation)</li>
+                            <li style="margin-bottom: 8px;"><strong>\(v\)</strong> = Relative velocity</li>
+                            <li><strong>\(c\)</strong> = Speed of light (~299,792,458 m/s)</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(139, 92, 246, 0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.1);">
+                        <h5 style="color: #fff; margin-top: 0; margin-bottom: 10px; border-bottom: 1px solid rgba(139, 92, 246, 0.2); padding-bottom: 5px;">Solution</h5>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: #c4b5fd;">
+                            <li style="margin-bottom: 10px;"><strong>\(\gamma\)</strong> = 365,250</li>
+                            <li><strong>\(v\)</strong> = 0.99999999999625 &times; \(c\)<br><span style="font-size: 0.85em; opacity: 0.8;">(99.999999999625% light speed)</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p><strong>Psalm 90:4</strong></p>
+            <blockquote class="bible-verse">
+                "A (thousand 505) years in your sight are like a day that has just gone by, or like a watch in the night."
+            </blockquote>
+            <div class="lexicon-text">
+                <strong>505 'eleph eh'-lef</strong> prop, the same as 504; hence (the ox's head being the first letter of the alphabet, and this eventually used as a numeral) a thousand:--thousand.
+            </div>
+            <p class="meaning-text">Meaning: Human history and time are finite, but to God, immense spans of time pass effortlessly.</p>
+
+            <p><strong>Isaiah 57:15</strong></p>
+            <blockquote class="bible-verse">
+                "For this is what the high and exalted One says—he who lives forever, whose name is holy: 'I live in a high and holy place, but also with the one who is contrite and lowly in spirit...'"
+            </blockquote>
+            <p class="meaning-text">Meaning: God inhabits eternity rather than living sequentially minute-by-minute as we do.</p>
+            
+            <h3 class="section-title">The Nature of Eternity and Day/Night in Heaven</h3>
+            <p><strong>Revelation 21:23–25</strong></p>
+            <blockquote class="bible-verse">
+                "The city does not need the sun or the moon to shine on it, for the glory of God gives it light, and the Lamb is its lamp... On no day will its gates ever be shut, for there will be no night there."
+            </blockquote>
+            <p class="meaning-text">Meaning: Time on Earth is measured by the rising and setting of the sun. In the New Jerusalem, because there is no night or sun, traditional earthly timekeeping ceases to exist.</p>
+
+            <p><strong>Revelation 22:5</strong></p>
+            <blockquote class="bible-verse">
+                "There will be no more night. They will not need the light of a lamp or the light of the sun, for the Lord God will give them light. And they will reign forever and ever."
+            </blockquote>
+            <p class="meaning-text">Meaning: Eternal life in God’s presence is continuous, unbroken light and life without decay or end.</p>
+
+            <h3 class="section-title">A Day in God's Presence vs. Earthly Time</h3>
+            <p><strong>Psalm 84:10</strong></p>
+            <blockquote class="bible-verse">
+                "Better is one day in your courts than a thousand elsewhere; I would rather be a doorkeeper in the house of my God than dwell in the tents of the wicked."
+            </blockquote>
+            <p class="meaning-text">Meaning: Being in God's presence transcends the quality and value of any temporal period on Earth.</p>
+        </div>
+    </section>
+
+    <section id="part-three">
+        <h2>Part 3: God's Creation Discovers the Precision of Time Through His Creation of Cesium-133</h2>
+        <div class="glass-card">
+            
+            <h3 class="section-title" style="margin-top: 0;">What Time Do You Go By?</h3>
+            <p>In my house, we have a running joke: "Are we going by microwave time or stove time?" No matter how many times I try to sync them up, the clock on the microwave and the clock on the stove always end up a minute or two apart. It’s a funny, daily reminder that even under the exact same roof, time isn't always agreed upon. It begs a fascinating question: What time do you actually go by?</p>
+            
+            <p>While we might playfully argue over household appliances, physicists and philosophers have categorized time into a few distinct frameworks to help us understand how it truly operates in the universe and in our minds:</p>
+            
+            <ul style="color: var(--text-muted); font-size: 1.1rem; padding-left: 20px; margin-bottom: 40px;">
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">Spacetime:</strong> Einstein's revelation that the three physical dimensions of space and the one dimension of time are inextricably woven together into a single, dynamic fabric that bends and warps around massive objects.</li>
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">Proper Time:</strong> The exact, physical time measured by a clock following a specific path through spacetime—meaning your "proper time" will literally tick at a different rate than someone else's depending on gravity and how fast you are moving.</li>
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">Manifest Time:</strong> The common sense, sequential flow of time exactly as we experience it day-to-day—the seemingly unyielding, one-way march from the past, through the present, and into the future.</li>
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">Psychological Time:</strong> How our brains perceive the passage of time. A five-minute wait in traffic can feel like an eternity, while a joyful weekend with loved ones vanishes in seconds.</li>
+            	<li style="margin-bottom: 10px;"><strong style="color: #fff;">Heaven Time:</strong> Revelation 22:5 notes there will be "no more night" and believers will reign "forever and ever," indicating an existence that transcends finite earthly measurements</li>
+            </ul>
+
+
+            <p style="margin-bottom: 30px;">But when science needs an absolute, universal standard—a time far more precise than our kitchen microwave—they look to the very building blocks of God's creation.</p>
+
+            <div class="atom-widget">
+                <div class="atom-circle">
+                    <div class="atom-core"></div>
+                </div>
+                <h3 style="color: #fff; margin-top: 0; font-size: 1.5rem;">The Cesium-133 Atom</h3>
+                <div class="cycles-text">
+                    <span style="color: var(--accent);">9,192,631,770</span> cycles = 1 second
+                </div>
+                <p style="font-size: 1.2rem; color: #c4b5fd; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">Physical Changes</p>
+                
+                <a href="https://www.youtube.com/watch?v=OKms5a0nGO4" target="_blank" class="video-btn" style="margin-bottom: 0;">▶ Watch: God decides how long a second is</a>
+            </div>
+
+            <h3 class="section-title" style="margin-top: 40px;">The Discoveries of Man</h3>
+            <p>While God set the foundations of time and matter, humanity has spent centuries trying to comprehend it. We have built up the creation of the atom and the laws of the universe, but how did we discover the mathematical precision of time?</p>
+
+	    <p>In 525 AD, a monk named Dionysius Exiguus forever changed how we measure time. Tasked with calculating the date of Easter, he refused to use a calendar anchored to a Roman emperor who persecuted Christians. Instead, he reset the clock to the arrival of Jesus Christ, dividing all of earthly time into BC (Before Christ) and AD (Anno Domini, In the Year of Our Lord).
+
+In modern times, there has been a push to replace these acronyms with BCE (Before Common Era) and CE (Common Era) to secularize the calendar. Yet, despite renaming the era, the profound reality remains: the entire world still numbers its days from the exact same origin point. We still use the timeline he originated, simply calling it something different.
+
+It is a profound reminder of Ecclesiastes 3. While our lives are bound by inevitable seasons—"a time for war and a time for peace"—time itself is ultimately anchored by the One who stepped into our timeline, inviting us out of temporary struggles and into His eternal peace.</p>	
+            
+            <p><strong>Socrates (c. 470–399 BCE) & Aristotle (384–322 BCE)</strong><br>
+            The philosophical inquiry into time began in ancient Greece. Socrates (often through the writings of his student Plato) viewed time as a moving image of eternity—a heavenly, divine rhythm dictated by the perfect motion of the cosmos. For him, time was deeply connected to the eternal realm of God's perfect forms. Aristotle, however, took a more grounded, analytical approach. He defined time simply as the "measure of motion" regarding a before and an after. If nothing changed, Aristotle argued, time would cease to exist. Their differing opinions set the stage: is time a divine framework, or just a byproduct of physical movement?</p>
+
+            <p><strong>Isaac Newton (1642–1727) - Absolute Time</strong><br>
+            Centuries later, Sir Isaac Newton introduced complex mathematics to the mystery. He believed in "Absolute Time," describing it as a master clock ticking uniformly across the universe, completely independent of the objects moving within it. To Newton, time was the rigid stage upon which God's creation played out.</p>
+
+            <p><strong>Albert Einstein (1879–1955) - Spacetime & Relativity</strong><br>
+            Einstein shattered Newton's rigid stage. Through his theories of Special and General Relativity, Einstein proved mathematically that time is not absolute, but relative. It bends, warps, and slows down near massive objects or at high speeds. Time and space are woven together into a single fabric called <em>spacetime</em>. A second for someone traveling near the speed of light ticks differently than a second for someone standing on Earth—a profound realization that perfectly echoes the scriptural truth that a thousand years to us is like a day to God.</p>
+
+            <p><strong>The Quantum Era to Present</strong><br>
+            Today, modern physicists explore the quantum realm, dealing with Planck time ($10^{-43}$ seconds) and the very fabric of reality. With tools like the Cesium-133 atom, we don't just philosophize about time—we measure it to 18 decimal places. Yet, the more mathematically complex our formulas become, the more they reveal an intricate, breathtaking design authored by the Master Builder.</p>
+        </div>
+    </section>
+
+    <section id="part-four">
+        <h2>Part 4: Introducing all of the Dimensions</h2>
+        <div class="glass-card">
+            <p>To truly grasp the scale of creation, we must look beyond what our eyes can see. We live in a world governed by dimensions, but physics mathematically points to realities that exceed our everyday experience.</p>
+            
+            <ul style="color: var(--text-muted); font-size: 1.1rem; padding-left: 20px;">
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">1st Dimension:</strong> A single line representing length.</li>
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">2nd Dimension:</strong> A flat plane, like a drawing on a piece of paper, adding width.</li>
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">3rd Dimension:</strong> Our physical world, adding depth. Up, down, left, right, forward, backward.</li>
+                <li style="margin-bottom: 10px;"><strong style="color: #fff;">4th Dimension:</strong> Time. As Einstein proved, time is inextricably linked to our 3D space, creating the 4D fabric of <em>spacetime</em> that governs physical movement and decay.</li>
+            </ul>
+
+            <h3 class="section-title" style="margin-top: 30px;">The Fifth Dimension</h3>
+            <p>Is there something beyond time and space? Mathematically, yes. In 1921, physicist Theodor Kaluza and mathematician Oskar Klein introduced the Kaluza-Klein theory, which successfully unified gravity and electromagnetism by adding a <strong>fifth dimension</strong> to Einstein's equations. Modern String Theory and M-Theory require even more dimensions (up to 10 or 11) for the mathematics of the universe to hold together without collapsing.</p>
+            
+            <p>The fifth dimension represents a realm outside of our observable spacetime. Mathematically, in a 5D space, you could see our entire 4D timeline—past, present, and future—simultaneously, as a single completed geometry. What physicists describe mathematically as a higher-dimensional reality, believers might recognize as eternity—the high and holy place where God resides, perfectly observing the alpha and the omega, the beginning and the end, in a single, unified glance.</p>
+        </div>
+    </section>
+
+    <!-- PART 5 -->
+    <section id="part-five">
+        <h2>Part 5: Can Time stop or slow down?</h2>
+        <div class="glass-card">
+            <p>When we think of gravity, we often think of a force pulling objects toward the ground. But in the context of Einstein's universe, gravity is much more profound: <strong>Gravity is the curvature of spacetime itself.</strong></p>
+            
+            <p>Imagine placing a heavy bowling ball on a trampoline. The ball creates a deep curve in the fabric. If you roll a marble nearby, it follows that curve. Massive objects like Earth, the Sun, and Black Holes do the exact same thing to the fabric of time and space.</p>
+
+            <h3 class="section-title">Gravitational Time Dilation</h3>
+            <p>Because gravity is the warping of spacetime, it doesn't just affect where objects move; it affects how fast time "ticks." This phenomenon is known as <strong>Gravitational Time Dilation</strong>. </p>
+            
+            <div class="formula-block" style="background: rgba(59, 130, 246, 0.1); border: 1px solid var(--secondary-accent);">
+                <p style="margin: 0; color: #fff; text-align: center;">
+                    <strong>The Rule:</strong> The stronger the gravity (the deeper the curve), the slower time passes.
+                </p>
+            </div>
+
+            <p>This means that if you were standing on the surface of a massive planet with intense gravity, your clock would tick <em>slower</em> than the clock of an astronaut floating in deep space, far away from any gravitational pull. Time literally slows down relative to Earth as you approach a massive source of gravity!</p>
+            
+            <p>It is a breathtaking reminder that even the "constants" we rely on are part of a dynamic, interconnected design where nothing is truly static—except for the One who holds the fabric together.</p>
+        </div>
+    </section>
+
+    <!-- INVITATION -->
+    <section id="invitation" class="invitation-section">
+        <div class="glass-card" style="border-left: 5px solid var(--accent);">
+            <h2 style="margin-top:0;">Invitation</h2>
+            <p>When I worked for Lovell Custom Sheet Metal, John Panda was the foreman of the composite shop, and I was his understudy. In the shop, we prefabricated the entire building, and precision was everything. As John used to say, 'We work in 64ths of an inch in the composite shop, bud.' If you were off by just 1/8 of an inch early on, by the time you finished the wall, the panels would be out by feet.</p>
+            
+            <p>Later, I was out in the field working on the James River Assembly wall that faces the highway. Because the structural framing we were attaching to wasn't perfectly level, the prefabricated panels weren't lining up. The field workers were getting impatient. They just wanted to get it done and suggested we just drill new holes in the panels.</p>
+            
+            <p>Remembering my training with John Panda, I knew that slipping by an eighth of an inch here and there would make the whole wall a disaster. So I made them stop. We took the panels down, went back to the framing, leveled it, and did it the right way. Once we laid the right groundwork, everything lined up perfectly.</p>
+            
+            <p>I look back on this and realize how often I approach my spiritual life like those impatient field workers—I just want the work to be done. We pray for patience, courage, or love, hoping God will just snap His fingers so we can be done with the striving. We rush through our days to get to the next thing, missing both the work and the worth of the present moment.</p>
+            
+            <p>But God is like that standard in the composite shop. He says, 'No, we're going to do this right. We have to take it back to the foundation.' He doesn't just want the final result; He wants us. And the only time He gets to have us is right now. We won't encounter God in the past or the future, but in the present.</p>
+            
+            <p>The work of this moment is to become a person of love, a patient person, a fair person. When we stop just wanting to be 'done' and decide we want to be done right, we finally begin to realize the worth of every single moment.</p>
+            
+            <p style="margin-top: 30px; font-weight: 600; color: var(--accent);">If you don't know the Lord I would be happy to pray with you just ask. <br> — James S.</p>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    const timelineData = [
+        { time: "10⁻⁴³ sec", epoch: "Planck Epoch", description: "The very beginning of the universe.", kjv: "\"In the beginning God created the heaven and the earth.\" - Genesis 1:1", graphic: "planck" },
+        { time: "10⁻³² sec", epoch: "Inflationary Epoch", description: "Rapid space expansion.", kjv: "\"He stretcheth out the north over the empty place, and hangeth the earth upon nothing.\" - Job 26:7", graphic: "inflation" },
+        { time: "seconds", epoch: "Nucleosynthesis", description: "First nuclei form.", kjv: "\"Through faith we understand that the worlds were framed by the word of God, so that things which are seen were not made of things which do appear.\" - Hebrews 11:3", graphic: "nucleo" },
+        { time: "380k years", epoch: "Recombination", description: "First light forms.", kjv: "\"And God said, Let there be light: and there was light.\" - Genesis 1:3", graphic: "light" },
+        { time: "300m years", epoch: "Galaxy Formation", description: "Gravity forms clusters.", kjv: "\"He telleth the number of the stars; he calleth them all by their names.\" - Psalm 147:4", graphic: "galaxy" },
+        { time: "Today", epoch: "Expansion Continues", description: "Universe expands.", kjv: "\"Behold, I shew you a mystery; We shall not all sleep, but we shall all be changed,\" - 1 Corinthians 15:51", graphic: "today" },
+        { time: "10¹⁵ years", epoch: "Age of Black Holes", description: "Stellar death and isolation.", kjv: "\"For the day of the LORD is near upon all the heathen...\" - Obadiah 1:15", graphic: "blackholes" },
+        { time: "10⁴⁰ years", epoch: "Proton Decay", description: "Matter breaks down.", kjv: "\"Lift up your eyes to the heavens, and look upon the earth beneath: for the heavens shall vanish away like smoke, and the earth shall wax old like a garment...\" - Isaiah 51:6", graphic: "decay" },
+        { time: "Future", epoch: "Final Collapse / Big Crunch", description: "The ultimate end.", kjv: "\"But the day of the Lord will come as a thief in the night; in the which the heavens shall pass away with a great noise, and the elements shall melt with fervent heat...\" - 2 Peter 3:10", graphic: "omega" }
+    ];
+
+    const slider = document.getElementById('epochSlider');
+    const infoTime = document.getElementById('info-time');
+    const infoEpoch = document.getElementById('info-epoch');
+    const infoDescription = document.getElementById('info-description');
+    const infoKjv = document.getElementById('info-kjv');
+    const svgElement = document.getElementById('timeline-svg');
+
+    function updateContent(index) {
+        const current = timelineData[index];
+        infoTime.textContent = current.time;
+        infoEpoch.textContent = current.epoch;
+        infoDescription.textContent = current.description;
+        infoKjv.textContent = current.kjv;
+
+        svgElement.innerHTML = '';
+        if (current.graphic === "planck") {
+            svgElement.innerHTML = '<circle cx="50" cy="125" r="40" fill="#00ffff" opacity="0.3"/><circle cx="50" cy="125" r="20" fill="#00ffff" />';
+        } else if (current.graphic === "inflation") {
+            svgElement.innerHTML = '<circle cx="100" cy="125" r="100" fill="#00ffff" opacity="0.1"/><circle cx="100" cy="125" r="30" fill="#00ffff" />';
+        } else if (current.graphic === "nucleo") {
+            svgElement.innerHTML = '<circle cx="150" cy="125" r="120" fill="#4db8ff" opacity="0.1"/>' +
+                '<circle cx="150" cy="115" r="5" fill="#fcf"/>' +
+                '<circle cx="145" cy="135" r="5" fill="#cff"/>' +
+                '<circle cx="160" cy="128" r="5" fill="#ffc"/>';
+        } else if (current.graphic === "light") {
+            svgElement.innerHTML = '<circle cx="200" cy="125" r="140" fill="#ffffcc" opacity="0.1"/>' +
+                '<circle cx="200" cy="125" r="15" fill="#ffffcc"/>';
+        } else if (current.graphic === "galaxy") {
+            svgElement.innerHTML = '<circle cx="250" cy="125" r="150" fill="#ffffff" opacity="0.05"/>' +
+                '<circle cx="240" cy="110" r="10" fill="#ccc"/><circle cx="260" cy="140" r="8" fill="#ddd"/><circle cx="270" cy="100" r="12" fill="#aaa"/>';
+        } else if (current.graphic === "today") {
+            svgElement.innerHTML = '<circle cx="350" cy="125" r="150" fill="#ffffff" opacity="0.05"/>' +
+                '<circle cx="330" cy="115" r="10" fill="#ccf"/><circle cx="370" cy="145" r="10" fill="#fcf"/><circle cx="390" cy="95" r="10" fill="#ffc"/>';
+        } else if (current.graphic === "blackholes") {
+            svgElement.innerHTML = '<circle cx="450" cy="125" r="150" fill="#000000"/>' +
+                '<circle cx="450" cy="125" r="10" fill="#ff0000" />';
+        } else if (current.graphic === "decay") {
+            svgElement.innerHTML = '<circle cx="550" cy="125" r="150" fill="#ffffff" opacity="0.01"/>' +
+                '<circle cx="550" cy="125" r="2" fill="#ccc" opacity="0.5"/>';
+        } else if (current.graphic === "omega") {
+            svgElement.innerHTML = '<circle cx="650" cy="125" r="20" fill="#ff0000" />';
+        }
+    }
+
+    if (slider) {
+        slider.addEventListener('input', () => updateContent(slider.value));
+        updateContent(slider.value);
+    }
+
+    function playStanAudio() {
+        const audio = document.getElementById('stanAudio');
+        const btn = document.getElementById('stanBtn');
+        if (audio.paused) {
+            audio.play();
+            btn.innerHTML = '⏸ Pause Stan U.';
+        } else {
+            audio.pause();
+            btn.innerHTML = '🔊 Read by the Stan U.';
+        }
+    }
+    
+    const audioElem = document.getElementById('stanAudio');
+    if (audioElem) {
+        audioElem.addEventListener('ended', function() {
+            document.getElementById('stanBtn').innerHTML = '🔊 Read by the Stan U.';
+        });
+    }
+</script>
+</body>
+</html>
+
+
+</div>
+
+<script>
+    const timelineData = [
+        { time: "10⁻⁴³ sec", epoch: "Planck Epoch", description: "The very beginning of the universe.", kjv: "\"In the beginning God created the heaven and the earth.\" - Genesis 1:1", graphic: "planck" },
+        { time: "10⁻³² sec", epoch: "Inflationary Epoch", description: "Rapid space expansion.", kjv: "\"He stretcheth out the north over the empty place, and hangeth the earth upon nothing.\" - Job 26:7", graphic: "inflation" },
+        { time: "seconds", epoch: "Nucleosynthesis", description: "First nuclei form.", kjv: "\"Through faith we understand that the worlds were framed by the word of God, so that things which are seen were not made of things which do appear.\" - Hebrews 11:3", graphic: "nucleo" },
+        { time: "380k years", epoch: "Recombination", description: "First light forms.", kjv: "\"And God said, Let there be light: and there was light.\" - Genesis 1:3", graphic: "light" },
+        { time: "300m years", epoch: "Galaxy Formation", description: "Gravity forms clusters.", kjv: "\"He telleth the number of the stars; he calleth them all by their names.\" - Psalm 147:4", graphic: "galaxy" },
+        { time: "Today", epoch: "Expansion Continues", description: "Universe expands.", kjv: "\"Behold, I shew you a mystery; We shall not all sleep, but we shall all be changed,\" - 1 Corinthians 15:51", graphic: "today" },
+        { time: "10¹⁵ years", epoch: "Age of Black Holes", description: "Stellar death and isolation.", kjv: "\"For the day of the LORD is near upon all the heathen...\" - Obadiah 1:15", graphic: "blackholes" },
+        { time: "10⁴⁰ years", epoch: "Proton Decay", description: "Matter breaks down.", kjv: "\"Lift up your eyes to the heavens, and look upon the earth beneath: for the heavens shall vanish away like smoke, and the earth shall wax old like a garment...\" - Isaiah 51:6", graphic: "decay" },
+        { time: "Future", epoch: "Final Collapse / Big Crunch", description: "The ultimate end.", kjv: "\"But the day of the Lord will come as a thief in the night; in the which the heavens shall pass away with a great noise, and the elements shall melt with fervent heat...\" - 2 Peter 3:10", graphic: "omega" }
+    ];
+
+    const slider = document.getElementById('epochSlider');
+    const infoTime = document.getElementById('info-time');
+    const infoEpoch = document.getElementById('info-epoch');
+    const infoDescription = document.getElementById('info-description');
+    const infoKjv = document.getElementById('info-kjv');
+    const svgElement = document.getElementById('timeline-svg');
+
+    function updateContent(index) {
+        const current = timelineData[index];
+        infoTime.textContent = current.time;
+        infoEpoch.textContent = current.epoch;
+        infoDescription.textContent = current.description;
+        infoKjv.textContent = current.kjv;
+
+        // Clean up svg
+        svgElement.innerHTML = '';
+        
+        // Dynamic graphics rendering for each epoch
+        if (current.graphic === "planck") {
+            svgElement.innerHTML = '<circle cx="50" cy="125" r="40" fill="#00ffff" opacity="0.3"/><circle cx="50" cy="125" r="20" fill="#00ffff" />';
+        } else if (current.graphic === "inflation") {
+            svgElement.innerHTML = '<circle cx="100" cy="125" r="100" fill="#00ffff" opacity="0.1"/><circle cx="100" cy="125" r="30" fill="#00ffff" />';
+        } else if (current.graphic === "nucleo") {
+            svgElement.innerHTML = '<circle cx="150" cy="125" r="120" fill="#4db8ff" opacity="0.1"/>' +
+                '<circle cx="150" cy="115" r="5" fill="#fcf"/>' +
+                '<circle cx="145" cy="135" r="5" fill="#cff"/>' +
+                '<circle cx="160" cy="128" r="5" fill="#ffc"/>';
+        } else if (current.graphic === "light") {
+            svgElement.innerHTML = '<circle cx="200" cy="125" r="140" fill="#ffffcc" opacity="0.1"/>' +
+                '<circle cx="200" cy="125" r="15" fill="#ffffcc"/>';
+        } else if (current.graphic === "galaxy") {
+            svgElement.innerHTML = '<circle cx="250" cy="125" r="150" fill="#ffffff" opacity="0.05"/>' +
+                '<circle cx="240" cy="110" r="10" fill="#ccc"/><circle cx="260" cy="140" r="8" fill="#ddd"/><circle cx="270" cy="100" r="12" fill="#aaa"/>';
+        } else if (current.graphic === "today") {
+            svgElement.innerHTML = '<circle cx="350" cy="125" r="150" fill="#ffffff" opacity="0.05"/>' +
+                '<circle cx="330" cy="115" r="10" fill="#ccf"/><circle cx="370" cy="145" r="10" fill="#fcf"/><circle cx="390" cy="95" r="10" fill="#ffc"/>';
+        } else if (current.graphic === "blackholes") {
+            svgElement.innerHTML = '<circle cx="450" cy="125" r="150" fill="#000000"/>' +
+                '<circle cx="450" cy="125" r="10" fill="#ff0000" />';
+        } else if (current.graphic === "decay") {
+            svgElement.innerHTML = '<circle cx="550" cy="125" r="150" fill="#ffffff" opacity="0.01"/>' +
+                '<circle cx="550" cy="125" r="2" fill="#ccc" opacity="0.5"/>';
+        } else if (current.graphic === "omega") {
+            svgElement.innerHTML = '<circle cx="650" cy="125" r="20" fill="#ff0000" />';
+        }
+    }
+
+    if (slider) {
+        slider.addEventListener('input', () => {
+            updateContent(slider.value);
+        });
+        // Initialize initial state
+        updateContent(slider.value);
+    }
+
+    function playStanAudio() {
+        const audio = document.getElementById('stanAudio');
+        const btn = document.getElementById('stanBtn');
+        if (audio.paused) {
+            audio.play();
+            btn.innerHTML = '⏸ Pause Stan U.';
+        } else {
+            audio.pause();
+            btn.innerHTML = '🔊 Read by the Stan U.';
+        }
+    }
+    
+    const audioElem = document.getElementById('stanAudio');
+    if (audioElem) {
+        audioElem.addEventListener('ended', function() {
+            document.getElementById('stanBtn').innerHTML = '🔊 Read by the Stan U.';
+        });
+    }
+</script>
+</body>
+</html>
